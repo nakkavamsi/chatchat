@@ -1,9 +1,6 @@
 package com.vvb.chatchat;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.nfc.Tag;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -13,10 +10,12 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
@@ -36,6 +35,7 @@ public class MainActivity2 extends AppCompatActivity {
     String verificationId;
     PhoneAuthProvider.ForceResendingToken token;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,24 +49,21 @@ public class MainActivity2 extends AppCompatActivity {
         textView2 = findViewById(R.id.textView2);//state
         codePicker = findViewById(R.id.ccp);
 
-     nextBtn.setOnClickListener(new View.OnClickListener() {
-    @Override
-    public void onClick(View v) {
-        if (PhoneNumber.getText().toString().isEmpty() && PhoneNumber.getText().toString().length() == 10){
+     nextBtn.setOnClickListener(v -> {
+         if (PhoneNumber.getText().toString().isEmpty() && PhoneNumber.getText().toString().length() == 10){
 
-            String phoneNum = "+"+codePicker.getSelectedCountryCode()+PhoneNumber.getText().toString();
-            Log.d(TAG,"OnClick: Phone No" + phoneNum);
-            progressBar.setVisibility(View.VISIBLE);
-            textView2.setText("Sending OTP....");
-            textView2.setVisibility(View.VISIBLE);
-            requestOTP(phoneNum);
+             String phoneNum = "+"+codePicker.getSelectedCountryCode()+PhoneNumber.getText().toString();
+             Log.d(TAG,"OnClick: Phone No" + phoneNum);
+             progressBar.setVisibility(View.VISIBLE);
+             textView2.setText("Sending OTP....");
+             textView2.setVisibility(View.VISIBLE);
+             requestOTP(phoneNum);
 
-        }else {
-            PhoneNumber.setError("Phone Number is Not Valid Please try Again");
-        }
+         }else {
+             PhoneNumber.setError("Phone Number is Not Valid Please try Again");
+         }
 
-    }
-});
+     });
 
 
 
